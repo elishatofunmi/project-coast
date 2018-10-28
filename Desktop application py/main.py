@@ -1,34 +1,19 @@
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5 import QtWidgets, QtGui, QtCore
+
+from scipy.ndimage import imread
 import sys
 
+app = QtWidgets.QApplication(sys.argv)
 
-        
-class display(QWindow):
-    def __init__(self):
-        QWindow.__init__(self)
-        self.setTitle('My Database')
-        
-        self.resize(500,300)
-        self.setMinimumWidth(200)
-        self.setMaximumWidth(500)
-        self.setMinimumHeight(300)
-        self.setMaximumHeight(600)
-        
-    def load_backgroud_picture():
-        return
-    
-    def login_with_text():
-        return
-    
-    
-        
-        
-        
-app = QApplication(sys.argv)
-screen = display()
-screen.show()
-
-
-sys.exit(app.exec_())
+input_image = imread({'index.jpeg'})
+height, width, channels = input_image.shape
+bytesPerLine = channels * width
+qImg = QtGui.QImage(input_image.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888)
+pixmap01 = QtGui.QPixmap.fromImage(qImg)
+pixmap_image = QtGui.QPixmap(pixmap01)
+label_imageDisplay = QtWidgets.QLabel()
+label_imageDisplay.setPixmap(pixmap_image)
+label_imageDisplay.setAlignment(QtCore.Qt.AlignCenter)
+label_imageDisplay.setScaledContents(True)
+label_imageDisplay.setMinimumSize(1,1)
+label_imageDisplay.show()
