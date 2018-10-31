@@ -42,7 +42,7 @@ class Window(QMainWindow):
         return
 
     def confirm_details(self):
-        if dict_details['Password'] != dict_details['confirm_password']:
+        if self.dict_details['Password'] != self.dict_details['confirm_password']:
             self.display_label = QLabel('your password does not match')
             self.label_name.move(100,430)
             solution = False
@@ -100,47 +100,50 @@ class Window(QMainWindow):
         # display entry box for name
         self.lineedit_name = QLineEdit()
         self.lineedit_name.setPlaceholderText("Enter your name")
-        layout.addWidget(self.lineedit,50 ,40)
+        self.lineedit_name.move(50 ,40)
+        layout.addWidget(self.lineedit_name)
         
 
         # display Rank/title
         self.rank_title = QLabel('Rank/Title:')
         self.rank_title.move(30,60)
-        layout.add_widget(self.rank_title)
+        layout.addWidget(self.rank_title)
 
         # display entry box for rank or title
         self.rank_title_edit = QLineEdit()
-        layout.addWidget(self.rank_title_edit,50 ,60)
+        self.rank_title_edit.move(50,60)
+        layout.addWidget(self.rank_title_edit)
         self.rank_title_edit.setPlaceholderText("Enter your Title/Rank")
 
 
         # display password
         self.password_label = QLabel('Password:')
         self.password_label.move(30,80)
-        layout.add_widget(self.password_label)
+        layout.addWidget(self.password_label)
 
         #dispaly entrybox for password
         self.password_me = QLineEdit()
-        layout.addWidget(self.password_me,50 ,80)
+        self.password_me.move(50,80)
+        layout.addWidget(self.password_me)
         self.password_me.setPlaceholderText("Enter your password")
 
 
         # display confirm password
         self.password_confirm_label = QLabel('Confirm password:')
-        self.password__confirm_label.move(30,100)
-        layout.add_widget(self.password_confirm_label)
+        self.password_confirm_label.move(30,100)
+        layout.addWidget(self.password_confirm_label)
         
 
 
         # display entrybox to confirm password
         self.password_confirm = QLineEdit()
-        layout.addWidget(self.password_confirm,50 ,100)
+        self.password_confirm.move(50,100)
+        layout.addWidget(self.password_confirm)
         self.password_confirm.setPlaceholderText("confirm your password here")
 
 
-        widget = QWidget()
-        widget.setLayout(layout)
-        widget.show()
+        self.setLayout(layout)
+        self.show()
         return
 
         
@@ -151,14 +154,14 @@ class Window(QMainWindow):
         button.resize(100,30)
         button.setToolTip("This buttons saves all your entries")
         button.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
-        button.connect(self.get_details)
+        button.clicked.connect(self.get_details)
         
         button1 = QPushButton('cancel', self)
         button1.setToolTip("This button cancels whatever you might have done initially")
         button1.resize(100,30)
         button1.move(450,400)
         button1.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
-        button1.connect(self.clear_details)
+        button1.clicked.connect(self.clear_details)
 
 
         button2 = QPushButton('sign in', self)
@@ -166,12 +169,13 @@ class Window(QMainWindow):
         button2.resize(100,30)
         button2.move(270,400)
         button2.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
-        button2.connect(self.sign_in_details)
+        button2.clicked.connect(self.sign_in_details)
 
 
 
 #if "__name__" == "__main__":
 App = QApplication(sys.argv)
+App.setStyle('Fusion')
 window = Window()
 window.show()
 sys.exit(App.exec())
