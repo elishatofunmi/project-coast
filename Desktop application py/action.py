@@ -1,37 +1,39 @@
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
 import sys
+from PyQt5 import uic, QtWidgets
 
+qtCreatorFile = "parent_form.ui" 
+Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
+LandingPageUI, LandingPageBase = uic.loadUiType("child_form.ui")
 
-class Window(QWidget):
+class MyApp(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
-        QWidget.__init__(self)
-        
-        self.show_menubar()
-        
-        
-        
-        layout = QGridLayout()
-        self.setLayout(layout)
-        
-        menubar = QMenuBar()
-        layout.addWidget(menubar, 0,0)
-        
-        
-        actionFile = menubar.addMenu('File')
-        actionFile.addAction('New')
-        actionFile.addSeparator()
-        actionFile.addAction('Quit')
-        
-        
-        menubar.addMenu('Edit')
-        menubar.addMenu('View')
-        menubar.addMenu('Help')
-        
-        
-app = QApplication(sys.argv)
+        QtWidgets.QMainWindow.__init__(self)
+        Ui_MainWindow.__init__(self)
+        self.setupUi(self)
 
-screen = Window()
-screen.show()
+        self.btnOpenChild.clicked.connect(self.showChildForm) 
 
-sys.exit(app.exec_())
+
+    def showChildForm(self):
+        self.child_win = childForm(self, 123)        
+        self.child_win.show()      
+
+
+class childForm(LandingPageBase, LandingPageUI):
+    def __init__(self,  myInt, parent=None):
+        QtWidgets.QMainWindow.__init__(self)
+        LandingPageBase.__init__(self)
+        self.setupUi(self)
+
+        self.myInt = myInt
+
+        print("My int: " + str(self.myInt))
+
+
+if __name__ == "__main__":
+    app=QtWidgets.QApplication.instance() 
+    if not app:  
+         app = QtWidgets.QApplication(sys.argv)
+    window = MyApp()
+    window.show()
+    sys.exit(app.exec_())

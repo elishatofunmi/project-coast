@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 class login(QWidget):
     def __init__(self):
         super().__init__()
-        self.title = 'login'
+        self.title = 'Student login'
         self.top = 100
         self.left = 100
         self.width = 300
@@ -23,20 +23,7 @@ class login(QWidget):
 
         self.display_background()
         self.display_login_details()
-        self.read_admin_details()
-        
-        
-    def read_admin_details(self):
-        flie_open = open('admin_details.txt', 'r')
-        read_data = flie_open.readlines()[0]
-        data = read_data.split(',')
-        flie_open.close()
-   
-        self.dict_details['Name'] = data[0]
-        self.dict_details['Rank/Title'] = data[1]
-        self.dict_details['password'] = data[2]
-        self.dict_details['confirm_password'] = data[3]
-        return 
+    
     
 
     def display_background(self):
@@ -44,7 +31,7 @@ class login(QWidget):
 
 
         self.label = QLabel(self)
-        pixmap = QPixmap("data_scientist.png")
+        pixmap = QPixmap("army_details.png")
         self.label.setGeometry(0,0,self.width,self.height)
         self.label.setPixmap(pixmap)
         self.label.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
@@ -61,7 +48,7 @@ class login(QWidget):
         layout = QVBoxLayout()
 
         # display name
-        self.label_name = QLabel('Name:')
+        self.label_name = QLabel('Service Number:')
         self.label_name.move(30,40)
         #self.label_name.resize()
         layout.addWidget(self.label_name)
@@ -76,7 +63,7 @@ class login(QWidget):
         
 
         # display Rank/title
-        self.rank_title = QLabel('Rank/Title:')
+        self.rank_title = QLabel('Rank:')
         self.rank_title.move(40,40)
         layout.addWidget(self.rank_title)
 
@@ -86,19 +73,6 @@ class login(QWidget):
         self.rank_title_edit.resize(20,20)
         layout.addWidget(self.rank_title_edit)
         self.rank_title_edit.setPlaceholderText("Enter your Title/Rank")
-
-
-        # display password
-        self.password_label = QLabel('Password:')
-        self.password_label.move(50,40)
-        layout.addWidget(self.password_label)
-
-        #dispaly entrybox for passwordo
-        self.password_me = QLineEdit()
-        self.password_me.move(50,50)
-        self.password_me.resize(20,20)
-        layout.addWidget(self.password_me)
-        self.password_me.setPlaceholderText("Enter your password")
 
 
         self.click_to_login = QPushButton('Login', self)
@@ -125,64 +99,35 @@ class login(QWidget):
         self.setLayout(layout)
         self.show()
         return
+    
   
     
     def log_in(self):
         if self.confirm_details() == True:
-            self.display_label.setText('Access Granted')
-            
-            mb = QMessageBox()
-            mb.setText('select Either of the bases')
-            mb.setIcon(QMessageBox.Information)
-            mb.setWindowTitle('select detail')
-            
-            
-            self.cancel_but = QPushButton("Cancel")
-            self.cancel_but.clicked.connect(self.cancel)
-            self.officer_but = QPushButton('Officier')
-            self.officer_but.clicked.connect(self.offi_cer)
-            self.member_but = QPushButton('Member')
-            self.member_but.clicked.connect(self.mem_ber)
-            
-            
-            mb.addButton(self.member_but, mb.YesRole)
-            mb.addButton(self.officer_but, mb.NoRole)
-            mb.addButton(self.cancel_but, mb.RejectRole)
-            ret = mb.exec_()
-            mb.show() 
+            # find person
+            self.display_label.setText('details taken')
+            self.search_person()
+
         else:
-            self.display_label.setText('Invalid entry, please confirm your details')
-        return 
-    
-    
-    def cancel(self):
-        # go to initial page
+            self.display_label.setText('confirm your details')
         return
-    
-    def offi_cer(self):
-        # go to officer page
-        return
-    
-    def mem_ber(self):
-        # go to mem_ber page
-        return
-    
+
     
     def confirm_details(self):
         name = self.lineedit_name.text()
         rank = self.rank_title_edit.text()
-        password = self.password_me.text()
         
         
-        my_name = self.dict_details['Name']
-        my_rank = self.dict_details['Rank/Title'] 
-        my_password = self.dict_details['password'] 
-        
-        if (name == my_name) & (rank == my_rank) & (password == my_password):
+        if (name != '') and (rank != ''):
             solu = True
         else:
             solu = False
+        
         return solu
+    
+    def search_person(self):
+        return
+    
     
     def close_win(self):
         return sys.exit()

@@ -31,7 +31,7 @@ class welcome(QWidget):
 
 
         self.label = QLabel(self)
-        pixmap = QPixmap("data_scientist.png")
+        pixmap = QPixmap("army_details.png")
         self.label.setGeometry(0,0,700,500)
         self.label.setPixmap(pixmap)
         self.label.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
@@ -276,38 +276,126 @@ class Authenticate_admin(QWidget):
         return sys.exit()
 
 
+class Window(QWidget):
+    def __init__(self):
+        QWidget.__init__(self)
+        
+        layout = QGridLayout()
+        self.setLayout(layout)
+        
+        self.stackedwidget = QStackedWidget()
+        layout.addWidget(self.stackedwidget, 0,0)
+        
+        
+        for x in range(1,4):
+            label = QLabel('stack child%i' % (x))
+            self.stackedwidget.addWidget(label)
+            
+            button = QPushButton('stack %i' % (x))
+            button.page = x
+            button.clicked.connect(self.on_button_clicked)
+            layout.addWidget(button, x, 0)
+            
+    def on_button_clicked(self):
+        button = self.sender()
+        self.stackedwidget.setCurrentIndex(button.page - 1)
 
-def read_from_file():
-    solu = True
-    flie_open = open('admin_details.txt', 'r')
-    read_data = flie_open.readlines()[0]
-    data = read_data.split(',')
-    flie_open.close()
-    if '' in data:
-        solu = False
-    else:
+
+
+class stack_Window(QWidget):
+    def __init__(self):
+        QWidget.__init__(self)
+        
+        self.layout = QGridLayout()
+        self.setLayout(self.layout)
+        
+        self.stackedwidget = QStackedWidget()
+        self.layout.addWidget(self.stackedwidget, 0,0)
+        
+    def run_file():
+        if self.read_from_file() == True:
+            window = welcome()
+            self.stackedwidget.addWidget(window)
+            self.stackedwidget.setCurrentIndex(1)
+            self.layout.addWidget(window, 30,40)
+            #window.show()
+        else:
+            auth_admin = Authenticate_admin()
+            self.stackedwidget.addWidget(auth_admin)
+            self.layout.addWidget(auth_admin, 30,40)
+            self.stackedwidget.setCurrentIndex(2)
+            self.run_file()
+        return
+        
+        
+        
+    def read_from_file():
         solu = True
-    return solu
+        flie_open = open('admin_details.txt', 'r')
+        read_data = flie_open.readlines()[0]
+        data = read_data.split(',')
+        flie_open.close()
+        if '' in data:
+            solu = False
+        else:
+            solu = True
+        return solu
 
 
 
-def run_file():
-    if read_from_file() == True:
-        window = welcome()
-        window.show()
-    else:
-        auth_admin = Authenticate_admin()
-        auth_admin.show()
-        auth_admin.close()
-        run_file()
-    return
 
+class Dialog(QDialog):
+    def __init__(self, parent=None):
+        QDialog.__init__(self, parent)
+        self.checkbox1 = QCheckBox('Option one', self)
+        self.checkbox2 = QCheckBox('Option two', self)
+        self.buttonOk = QPushButton('Ok', self)
+        self.buttonOk.clicked.connect(self.accept)
+        self.buttonCancel = QPushButton('Cancel', self)
+        self.buttonCancel.clicked.connect(self.reject)
+        layout = QGridLayout(self)
+        layout.addWidget(self.checkbox1, 0, 0, 1, 2)
+        layout.addWidget(self.checkbox2, 1, 0, 1, 2)
+        layout.addWidget(self.buttonOk, 2, 0)
+        layout.addWidget(self.buttonCancel, 2, 1)
+
+class show_window(QMainWindow):
+    def __init__(self):
+        QMainWindow.__init__(self)
+        widget = QWidget(self)
+        layout = QVBoxLayout(widget)
+        self.button = QPushButton('Show Dialog', self)
+        self.button.clicked.connect(self.handleButton)
+        layout.addWidget(self.button)
+        self.setCentralWidget(widget)
+
+    def handleButton(self):
+        dialog = Dialog(self)
+        if dialog.exec_() == QDialog.Accepted:
+            print('Option one: %s' % dialog.checkbox1.isChecked())
+            print('Option two: %s' % dialog.checkbox2.isChecked())
+        else:
+            print('Cancelled')
+        dialog.deleteLater()
 
 if __name__ == '__main__':
-    App = QApplication(sys.argv)
-    App.setStyle('Fusion')
+
+    import sys
+    app = QApplication(sys.argv)
+    window = show_window()
+    window.setGeometry(500, 300, 200, 100)
+    window.show()
+    sys.exit(app.exec_())
+
+
+
+
+#if __name__ == '__main__':
+#   App = QApplication(sys.argv)
+#    App.setStyle('Fusion')
     
     
-    run_file()
-    sys.exit(App.exec())
+#    auth_admin = Authenticate_admin()
+#    auth_admin.show()
+ #   sys.exit(App.exec())
     
