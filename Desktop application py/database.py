@@ -13,8 +13,9 @@ class Database:
                       ('name', 'rank','army_no', 'soldier_or_army', 'courses')]
         
     def create_database(self):
-        db_conn = sqlite3.connect('database.db')
-
+        db_conn = sqlite3.connect('database_officer.db')
+        db_conn_soldier = sqlite3.connect('database_soldier.db')
+        db_conn_soldier.close()
         db_conn.close()
         return
     

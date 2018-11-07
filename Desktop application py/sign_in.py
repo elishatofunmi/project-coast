@@ -20,17 +20,10 @@ class sign_in(QWidget):
         self.setMaximumSize(700,500)
         
         
-        self.confirm_admin()
+        self.show_officer_or_soldier()
             
-    def confirm_admin(self):
-        self.log = admin_log()
-        self.log.show()
-        
-        if self.log.state == True:
-            self.show_officer_or_soldier()
-        else:
-            pass
-        
+    
+       
         
     def show_officer_or_soldier(self):
         mb = QMessageBox()
@@ -525,16 +518,23 @@ class sign_in(QWidget):
     
     
     
+def confirm_admin():
+        log = admin_log()
+        get_state = log.state
+        log.show()
+        
+        if get_state == True:
+            App = QApplication(sys.argv)
+            App.setStyle('Fusion')
+            window = sign_in()
+            window.show()
+            p = window.palette()
+            p.setColor(window.backgroundRole(), Qt.gray)
+            window.setPalette(p)
+            sys.exit(App.exec())
+        else:
+            pass
 
 if __name__ == '__main__':
-    App = QApplication(sys.argv)
-    App.setStyle('Fusion')
+    confirm_admin()
     
-    window = sign_in()
-    window.show()
-    p = window.palette()
-    p.setColor(window.backgroundRole(), Qt.gray)
-    window.setPalette(p)
- 
-        
-    sys.exit(App.exec())

@@ -14,7 +14,7 @@ class welcome(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('NIGERIAN ARMY SCHOOL OF SIGNALS STUDENT RECORD DATABASE')
-        self.setGeometry(100, 100, 680, 500)
+        self.setGeometry(0, 0, 680, 500)
         self.setMaximumSize(700,500)
         self.display_background()
         self.display()
@@ -26,8 +26,10 @@ class welcome(QWidget):
         self.width = 700
         self.height = 500
         self.label = QLabel(self)
+        self.label.resize(self.width, self.height)
         pixmap = QPixmap("army_details.png")
-        self.label.setPixmap(pixmap)
+        self.pixmat = pixmap.scaled(self.width, self.height)
+        self.label.setPixmap(self.pixmat)
         self.label.setGeometry(0,0,self.width,self.height)
         self.label.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
         self.label.setScaledContents(True)
@@ -36,12 +38,12 @@ class welcome(QWidget):
 
 
     def display(self):
-        layout = QGridLayout()
-        
+        layout = QHBoxLayout()
+        layout.addStretch(1)
         
         titleLabel = QLabel('WELCOME TO THE NIGERIAN ARMY SCHOOL OF SIGNALS STUDENT RECORD DATABASE')
 
-        layout.addWidget(titleLabel, 1,2, 3,3)
+        layout.addWidget(titleLabel)
         titleLabel.setAlignment(Qt.AlignHCenter)
         titleLabel.setWordWrap(True)
 
@@ -50,13 +52,13 @@ class welcome(QWidget):
         loginButton.setToolTip("Login as an Administrator")
         loginButton.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
         loginButton.clicked.connect(self.click_to_log_in)
-        layout.addWidget(loginButton, 3, 1, 2, 1)
+        layout.addWidget(loginButton)
 
         signUpButton = QPushButton('Sign up', self)
         signUpButton.setToolTip("Sign in as an administrator")
         signUpButton.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
         signUpButton.clicked.connect(self.click_to_sign_in)
-        layout.addWidget(signUpButton, 3, 4,2,1)
+        layout.addWidget(signUpButton)
         self.setLayout(layout)
         self.show()
     
