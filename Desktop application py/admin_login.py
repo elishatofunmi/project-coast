@@ -5,7 +5,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
-
+#from sign_in import sign_in
 
 
 class admin_log(QWidget):
@@ -19,10 +19,12 @@ class admin_log(QWidget):
         self.setMaximumSize(700,500)
         self.dict_details = {}
         self.state = False
+        #self.sign = sign_in()
 
 
         self.display_background()
         self.display_login_details()
+    
     
     
 

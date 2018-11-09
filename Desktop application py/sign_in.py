@@ -9,6 +9,11 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 from admin_login import admin_log
 
 
+from PyQt5.QtCore import QCoreApplication
+
+
+
+
 class sign_in(QWidget):
     def __init__(self):
         super().__init__()
@@ -18,6 +23,7 @@ class sign_in(QWidget):
         self.width = 300
         self.height = 200
         self.setMaximumSize(700,500)
+        self.state = False
         
         
         self.show_officer_or_soldier()
@@ -524,14 +530,16 @@ def confirm_admin():
         log.show()
         
         if get_state == True:
-            App = QApplication(sys.argv)
-            App.setStyle('Fusion')
-            window = sign_in()
-            window.show()
-            p = window.palette()
-            p.setColor(window.backgroundRole(), Qt.gray)
-            window.setPalette(p)
-            sys.exit(App.exec())
+            app = QCoreApplication.instance()
+            if app is None:
+                app = QApplication(sys.argv)
+                app.setStyle('Fusion')
+                window = sign_in()
+                window.show()
+                p = window.palette()
+                p.setColor(window.backgroundRole(), Qt.gray)
+                window.setPalette(p)
+                sys.exit(App.exec())
         else:
             pass
 
