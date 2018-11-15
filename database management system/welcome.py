@@ -15,10 +15,14 @@ class welcome(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('NIGERIAN ARMY SCHOOL OF SIGNALS STUDENT RECORD DATABASE')
+        self.status = False
         self.setGeometry(0, 0, 680, 500)
         self.setMaximumSize(700,500)
         self.display_background()
         self.display()
+        
+        #self.mai = main()
+        #self.mai.stacked.setCurrentWidget(self)
     
 
 
@@ -28,7 +32,7 @@ class welcome(QWidget):
         self.height = 500
         self.label = QLabel(self)
         self.label.resize(self.width, self.height)
-        pixmap = QPixmap("army_details.png")
+        pixmap = QPixmap("welcome_page view.PNG")
         self.pixmat = pixmap.scaled(self.width, self.height)
         self.label.setPixmap(self.pixmat)
         self.label.setGeometry(0,0,self.width,self.height)
@@ -39,28 +43,35 @@ class welcome(QWidget):
 
 
     def display(self):
-        layout = QHBoxLayout()
-        layout.addStretch(1)
+        #layout.addStretch(1)
         
-        titleLabel = QLabel('WELCOME TO THE NIGERIAN ARMY SCHOOL OF SIGNALS STUDENT RECORD DATABASE')
+        #titleLabel = QLabel('WELCOME TO THE NIGERIAN ARMY SCHOOL OF SIGNALS STUDENT RECORD DATABASE')
 
-        layout.addWidget(titleLabel)
-        titleLabel.setAlignment(Qt.AlignHCenter)
-        titleLabel.setWordWrap(True)
+
+        #layout.addWidget(titleLabel)
+        #titleLabel.setAlignment(Qt.AlignHCenter)
+        #titleLabel.setWordWrap(True)
 
 
         loginButton =  QPushButton('Login', self)
-        loginButton.setToolTip("Login as an Administrator")
-        loginButton.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
+        loginButton.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7; padding: 16px')
         loginButton.clicked.connect(self.click_to_log_in)
-        layout.addWidget(loginButton)
+        loginButton.resize(200,50)
+        loginButton.move(70,290)
+        #layout.addWidget(loginButton)
 
-        signUpButton = QPushButton('Sign up', self)
-        signUpButton.setToolTip("Sign in as an administrator")
-        signUpButton.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
-        signUpButton.clicked.connect(self.click_to_sign_in)
-        layout.addWidget(signUpButton)
-        self.setLayout(layout)
+        self.signUpButton = QPushButton('Sign up', self)
+        self.signUpButton.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7; padding: 16px')
+        self.signUpButton.clicked.connect(self.click_to_sign_in)
+        self.signUpButton.move(450,290)
+        self.signUpButton.resize(200,50)
+        #layout.addWidget(self.signUpButton)
+        
+   
+        
+        
+        
+        #self.setLayout(layout)
         self.show()
     
     
@@ -68,6 +79,7 @@ class welcome(QWidget):
     
     def click_to_log_in(self):    #displays the name of the officer or soldier and his or her rank being searched for
         # move to the login window
+        self.status = 'login'
         self.log = login()
         self.log.show()
         return
@@ -80,6 +92,7 @@ class welcome(QWidget):
 
     def click_to_sign_in(self):
         # move to administrative sign in
+        self.status = 'sign'
         self.sign = sign_in()
         self.sign.show()
         
@@ -90,15 +103,15 @@ class welcome(QWidget):
    
     
     
-if __name__ == '__main__':
+#if __name__ == '__main__':
     
-    App = QApplication(sys.argv)
-    App.setStyle('Fusion')
+#    App = QApplication(sys.argv)
+#    App.setStyle('Fusion')
     
-    mai = welcome()
-    mai.show()
-    p = mai.palette()
-    p.setColor(mai.backgroundRole(), Qt.gray)
-    mai.setPalette(p)
+#    mai = welcome()
+#    mai.show()
+#    p = mai.palette()
+#    p.setColor(mai.backgroundRole(), Qt.gray)
+#    mai.setPalette(p)
     
-    sys.exit(App.exec())
+#    sys.exit(App.exec())
