@@ -16,10 +16,14 @@ class welcome(QWidget):
         super().__init__()
         self.setWindowTitle('NIGERIAN ARMY SCHOOL OF SIGNALS STUDENT RECORD DATABASE')
         self.status = False
-        self.setGeometry(0, 0, 680, 500)
-        self.setMaximumSize(700,500)
+        self.setGeometry(0, 0, 680, 600)
+        self.setMaximumSize(700,600)
+        self.trigger_welcome()
+        
+    def trigger_welcome(self):
         self.display_background()
         self.display()
+        return
         
         #self.mai = main()
         #self.mai.stacked.setCurrentWidget(self)
@@ -29,10 +33,10 @@ class welcome(QWidget):
     def display_background(self):
 
         self.width = 700
-        self.height = 500
+        self.height = 600
         self.label = QLabel(self)
         self.label.resize(self.width, self.height)
-        pixmap = QPixmap("welcome_page view.PNG")
+        pixmap = QPixmap("final_png.PNG")
         self.pixmat = pixmap.scaled(self.width, self.height)
         self.label.setPixmap(self.pixmat)
         self.label.setGeometry(0,0,self.width,self.height)

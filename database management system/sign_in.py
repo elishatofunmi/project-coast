@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import *
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget
 
-from database_display import Database
+from database import Database
 from PyQt5.QtCore import QCoreApplication
 
 
@@ -25,11 +25,14 @@ class sign_in(QWidget):
         self.setMaximumSize(600,300)
         self.selected_list = []
         self.get_image = None
-   #    self.mai = main()
-   #    self.mai.stacked.setCurrentWidget(self)
+        self.trigger_sign_in()
+ 
+   
         
         
+    def trigger_sign_in(self):
         self.show_officer_or_soldier()
+        return
             
     
        
@@ -258,7 +261,7 @@ class sign_in(QWidget):
         else:
             if select_list != []:
                 saved_data['Army_No'] = self.rank_title_edit.text()
-                saved_list.append(str(self.rank_title_edit.text()))
+                saved_list.append(self.rank_title_edit.text())
                 saved_data['name'] = self.edit_name.text()
                 saved_list.append(str(self.edit_name.text()))
                 saved_data['rank'] = self.rank_box.text()
@@ -274,10 +277,13 @@ class sign_in(QWidget):
             
         
         # save data to database
-        print (saved_list)
-        self.data_d = Database()
         print('opened database and write to database')
-        self.data_d.sign_up_users_by_dict(user_dict = saved_list, user_type = 'soldier')
+        print(saved_list)
+        unique_list = tuple(saved_list)
+        print(unique_list)
+        self.data_d = Database()
+        self.data_d.data = unique_list
+        self.data_d.insert_records(base_type = 'soldier')
         print('written to database')
         return
      
@@ -292,7 +298,7 @@ class sign_in(QWidget):
             if select_list != []:
                 
                 saved_data['Army_No'] = self.rank_title_edit.text()
-                saved_list.append(str(self.rank_title_edit.text()))
+                saved_list.append(self.rank_title_edit.text())
                 saved_data['name'] = self.edit_name.text()
                 saved_list.append(str(self.edit_name.text()))
                 saved_data['rank'] = self.rank_box.text()
@@ -308,10 +314,14 @@ class sign_in(QWidget):
             
         
         # save data to database
-        print (saved_list)
-        self.data_d = Database()
+        
         print('opened database and write to database')
-        self.data_d.sign_up_users_by_dict(user_dict = saved_list, user_type = 'officer')
+        print(saved_list)
+        unique_list = tuple(saved_list)
+        print(unique_list)
+        self.data_d = Database()
+        self.data_d.data = unique_list
+        self.data_d.insert_records(base_type = 'officer')
         print('written to database')
         return
     
@@ -700,14 +710,14 @@ class sign_in(QWidget):
     
     
 
-#if __name__ == '__main__':
-#   app = QApplication(sys.argv)
-#   app.setStyle('Fusion')
-#   window = sign_in()
-#   window.show()
-   #p = window.palette()
-   #p.setColor(window.backgroundRole(), Qt.gray)
-   #window.setPalette(p)
-#   sys.exit(app.exec())
+if __name__ == '__main__':
+   app = QApplication(sys.argv)
+   app.setStyle('Fusion')
+   window = sign_in()
+   window.show()
+   p = window.palette()
+   p.setColor(window.backgroundRole(), Qt.gray)
+   window.setPalette(p)
+   sys.exit(app.exec())
    
     

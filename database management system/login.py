@@ -6,9 +6,9 @@ from PyQt5.QtWidgets import *
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 
-from database_display import Database
+#from database_display import Database
 from display_window import display_window
-
+from database import Database
 
 class login(QWidget):
     def __init__(self):
@@ -22,10 +22,12 @@ class login(QWidget):
         self.dict_details = {}
         #self.mai = main()
         #self.mai.stacked.setCurrentWidget(self)
+        self.trigger_login()
 
-
+    def trigger_login(self):
         self.display_background()
         self.display_login_details()
+        return
     
     
 
@@ -95,33 +97,33 @@ class login(QWidget):
   
     
     def log_in(self):
-       return_details = None
+       display = Database()
+       details = ()
        if self.confirm_details() == True:
            # find person
            name = self.lineedit_name.text()
            try:
-              details = self.search_person(name, user_type = 'soldier')
-              print('gotten the detail from search person')
-              if details == False:
-                 details_false = self.search_person(name, user_type = 'officer')
-                 if details_false == False:
-                    self.display_label.setText('user not found re enter a valid user')
-                    print ('details from search person is false')
-                 else:
-                    print ('detail from search person is valid')
-                    return_details = details
-                    self.display_person(det = return_details)
-              
-           except NameError:
-              pass
-              
-               
+              details = display.fetch_record(int(name), base_type= 'officer')
+           except TypeError:
+              try:
+                 details= display.fetch_record(int(name), base_type = 'soldier')
+              except TypeError:
+                 details = 'not found'
            finally:
-              pass
-
+              if details == 'not found':
+                 self.display_label.setText('user not found re enter a valid user')
+              else:
+                 self.display_label.setText('user has been found')
        else:
-           self.display_label.setText('confirm your details')
-       return 
+          self.display_label.setText('enter a valid input')
+          
+       display_data = display_window()
+       get_image_directory = r'C:\Users\ACER\Desktop\database management system\images\\' + self.lineedit_name.text() + '.png'
+       display_data.attr_image = get_image_directory
+       display.attr_list = list(details)
+       display.show()
+           
+         
 
     
     def confirm_details(self):
@@ -132,44 +134,8 @@ class login(QWidget):
             solu = True
         else:
             solu = False
-        
         return solu
-    
-    def search_person(self,k, user_type):
-       display = Database()
-       print('got into search_person')
-       if user_type == 'soldier':
-          print('tested is soldier')
-          dis = display.retrive_data_id(k, user_type = 'soldier')
-          print('gotten value')
-          if dis == 'user not found':
-             self.display_label.setText('user not found re enter a valid user')
-             print ('value not valid')
-             valid = False
-          else:
-             print('value is valid')
-             valid = dis
-             
-          
-       elif user_type == 'officer':
-          print('tested is officer')
-          dis = display.retrive_data_id(k, user_type = 'officer')
-          print('gotten value')
-          if dis == 'user not found':
-             self.display_label.setText('user not found re enter a valid user')
-             print ('value not valid')
-             valid = False
-          else:
-             print ('value is valid')
-             valid = dis
-          
-       else:
-          pass
-       return valid
-     
-      
-  
-       
+ 
        
     def display_person(self, det):
        self.the_window = display_window()
@@ -189,9 +155,9 @@ class login(QWidget):
 
 
 
-#if __name__ == '__main__':
-#    App = QApplication(sys.argv)
-#    App.setStyle('Fusion')
-#    window = login()
-#    window.show()
-#    sys.exit(App.exec())
+if __name__ == '__main__':
+    App = QApplication(sys.argv)
+    App.setStyle('Fusion')
+    window = login()
+    window.show()
+    sys.exit(App.exec())

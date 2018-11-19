@@ -26,15 +26,21 @@ class main(QMainWindow):
         
             
     def initUI(self):
-       layout = QGridLayout()
-       self.setLayout(layout)
        self.stacked = QStackedWidget()
-       layout.addWidget(self.stacked, 0,0)
        
-       self.wel = welcome()
-       self.stacked.addWidget(self.wel)
+       
+       
+       self.leftlist = QListWidget()
+       self.leftlist.insertItem(0, 'authenticate_admin')
+       self.leftlist.insertItem(1,'welcome')
+       self.leftlist.insertItem(2,'sign up')
+       self.leftlist.insertItem(3,'login page')
+       self.leftlist.insertItem(4,'display_login_details')
+       
        self.auth_admin = Authenticate_admin()
        self.stacked.addWidget(self.auth_admin)
+       self.wel = welcome()
+       self.stacked.addWidget(self.wel)
        self.sign = sign_in()
        self.stacked.addWidget(self.sign)
        self.log = login()
@@ -42,12 +48,21 @@ class main(QMainWindow):
        self.display = display_window()
        self.stacked.addWidget(self.display)
        
+       hbox = QHBoxLayout(self)
+       hbox.addWidget(self.leftlist)
+       hbox.addWidget(self.stacked)
+
+       self.setLayout(hbox)
+       self.leftlist.currentRowChanged.connect(self.display)
+       self.setGeometry(300, 50, 10,10)
+#       self.setWindowTitle('StackedWidget demo')
+       self.show()
+      
+      
+      
        
-       
-       self.setCentralWidget(self.stacked)
-       self.welcome_page()
-             
-       #self.stacked.setCurrentWidget(self.log)
+    def display(self, i):
+       self.stacked.setCurrentIndex(0)
        
        
     def welcome_page(self):
@@ -89,13 +104,15 @@ class main(QMainWindow):
         
         
 
-
 if __name__ == '__main__':
-    
     App = QApplication(sys.argv)
     App.setStyle('Fusion')
     
-    mai = main()
-    mai.show()
-    
+    window = main()
+    window.show()
+#    p = window.palette()
+#    p.setColor(window.backgroundRole(), Qt.gray)
+#    window.setPalette(p)
+ 
+        
     sys.exit(App.exec())
