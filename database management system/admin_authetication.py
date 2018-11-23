@@ -12,7 +12,7 @@ class Authenticate_admin(QWidget):
     def __init__(self):
         QWidget.__init__(self)
         self.title = 'Admin login'
-        self.status = False
+        self.button_status = False
         self.setMaximumSize(700,500)
         self.dict_details = {'username': None, 'password': None, 'confirm_password': None}
         self.display_background()
@@ -177,24 +177,28 @@ class Authenticate_admin(QWidget):
         return
      
     def log_details(self):
+       value = None
        try:
           if self.get_admin_details() == False:
              self.save_details()
              self.display_entity()
+             self.button_status = False
           else:
              if self.compare_details() == True:
                 self.display_entity()
+                self.button_status = True
        except IndexError:
           if self.get_my_admin_details() == False:
              self.save_details()
              self.display_entity()
+             self.button_status = False
           else:
              if self.compare_details() == True:
                 self.display_entity()
-       finally:
-          pass
+                self.button_status = True
+      
        
-       return
+       return value
        
        
        

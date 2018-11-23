@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from PyQt5.QtGui import QIcon, QPixmap
 
-from PyQt5.QtWidgets import QWidget, QPushButton, QGridLayout, QLabel, QVBoxLayout, QLineEdit, QStackedLayout, QStackedWidget
+from PyQt5.QtWidgets import QWidget,QListWidget,QHBoxLayout, QPushButton, QGridLayout, QLabel, QVBoxLayout, QLineEdit, QStackedLayout, QStackedWidget
 
 from welcome import welcome
 from admin_authetication import Authenticate_admin
@@ -53,7 +53,7 @@ class main(QMainWindow):
        hbox.addWidget(self.stacked)
 
        self.setLayout(hbox)
-       self.leftlist.currentRowChanged.connect(self.display)
+       self.leftlist.currentRowChanged.connect(self.display_action)
        self.setGeometry(300, 50, 10,10)
 #       self.setWindowTitle('StackedWidget demo')
        self.show()
@@ -61,12 +61,13 @@ class main(QMainWindow):
       
       
        
-    def display(self, i):
-       self.stacked.setCurrentIndex(0)
+    def display_action(self, i):
+       self.stacked.setCurrentIndex(i)
+       self.stacked.setCurrentWidget(self.wel)
        
        
     def welcome_page(self):
-        self.stacked.setCurrentWidget(self.wel)
+        
         if self.wel.status == 'sign':
            self.stacked.setCurrentWidget(self.sign)
            

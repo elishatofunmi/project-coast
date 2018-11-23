@@ -107,15 +107,15 @@ class welcome(QWidget):
    
     
     
-#if __name__ == '__main__':
+if __name__ == '__main__':
     
-#    App = QApplication(sys.argv)
-#    App.setStyle('Fusion')
+    App = QApplication(sys.argv)
+    App.setStyle('Fusion')
     
-#    mai = welcome()
-#    mai.show()
-#    p = mai.palette()
-#    p.setColor(mai.backgroundRole(), Qt.gray)
-#    mai.setPalette(p)
+    mai = welcome()
+    mai.show()
+    p = mai.palette()
+    p.setColor(mai.backgroundRole(), Qt.gray)
+    mai.setPalette(p)
     
-#    sys.exit(App.exec())
+    sys.exit(App.exec())

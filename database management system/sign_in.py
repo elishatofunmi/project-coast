@@ -25,7 +25,9 @@ class sign_in(QWidget):
         self.setMaximumSize(600,300)
         self.selected_list = []
         self.get_image = None
+        self.army_type = ''
         self.trigger_sign_in()
+        
  
    
         
@@ -269,7 +271,7 @@ class sign_in(QWidget):
                 saved_data['unit'] = self.enter_unit.text()
                 saved_list.append(str(self.enter_unit.text()))
                 saved_data['courses_attended'] = select_list
-                saved_list.append(str(select_list))
+                saved_list.append(select_list)
                 self.display_label.setText('your details have been saved')
         
             else:
@@ -306,7 +308,7 @@ class sign_in(QWidget):
                 saved_data['unit'] = self.enter_unit.text()
                 saved_list.append(str(self.enter_unit.text()))
                 saved_data['courses_attended'] = select_list
-                saved_list.append(str(select_list))
+                saved_list.append(select_list)
                 self.display_label.setText('your details have been saved')
         
             else:
@@ -568,108 +570,88 @@ class sign_in(QWidget):
         self.show()
         
         
-    def add_image(self):
-       
-       self.file_out = QFileDialog()
-       self.file_out.setAcceptMode(QFileDialog.AcceptOpen)
-       #self.file_out.setLabelText('add image')
-       self.file_out.setDefaultSuffix('.png')
-       self.file_out.setViewMode(QFileDialog.Detail)
-       #self.file_out.open()
-       
-       fileName = self.file_out.getOpenFileName()
-       filePath = str(fileName[0])
-
-       self.get_image = QImage(filePath)
-       new_path = r'C:\Users\ACER\Desktop\database management system\images\\'
-       self.get_image.save(new_path + self.rank_title_edit.text()+ '.png')
-       
-       return 
-       
-       
-   
-            
+      
     def accept(self):
        
        try:
-          selected_list = []
+          selected_list = ''
           
           if hasattr(self, 'srcc') and self.srcc.isChecked():
-             selected_list.append('srcc')
+             selected_list +=  'srcc ' 
           else:
              pass
          
           if hasattr(self, 'sscc') and self.sscc.isChecked():
-             selected_list.append('sscc')
+             selected_list+= 'sscc '
           else:
              pass
                                     
                    
           if hasattr(self, 'ec') and self.ec.isChecked():
-              selected_list.append('ec')
+              selected_list+= 'ec '
           else:
              pass
                
           if hasattr(self, 'yoc') and self.yoc.isChecked():
-              selected_list.append('yoc')
+              selected_list+= 'yoc '
           else:
              pass
            
            
           if hasattr(self, 'bcc') and self.bcc.isChecked():
-              selected_list.append('bcc')
+              selected_list+= 'bcc '
           else:
              pass
                
           if hasattr(self, 'csc') and self.csc.isChecked():
-              selected_list.append('csc')
+              selected_list+= 'csc '
           else:
              pass
                
           if hasattr(self, 'nhc') and self.nhc.isChecked():
-              selected_list.append('nhc')
+              selected_list+= 'nhc '
           else:
              pass
                
           if hasattr(self, 'ict') and self.ict.isChecked():
-              selected_list.append('ict management')
+              selected_list+= 'ict '
                
           if hasattr(self, 'fos') and self.fos.isChecked():
-              selected_list.append('fos')
+              selected_list+= 'fos '
                
           if hasattr(self, 'yos') and self.yos.isChecked():
-             selected_list.append('yos')
+             selected_list+= 'yos '
                
           if hasattr(self, 'rob_b1') and self.rob_b1.isChecked():
-             selected_list.append('rob_b1')
+             selected_list+= 'rob_b1 '
                
           if hasattr(self, 'rop_b2') and self.rop_b2.isChecked():
-             selected_list.append('rob_b2')
+             selected_list+= 'rop_b2 '
                
           if hasattr(self, 'rob_b3') and self.rob_b3.isChecked():
-             self.selected_list.append('rob_b3')
+             self.selected_list+= 'rob_b3 '
           if hasattr(self, 'rob_tcx1') and self.rob_tcx1.isChecked():
-             selected_list.append('tcx1')
+             selected_list+= 'rob_tcx1 '
           if hasattr(self, 'tcx2') and self.tcx2.isChecked():
-             selected_list.append('tcx2')
+             selected_list+= 'tcx2 '
           if hasattr(self, 'tcx3') and self.tcx3.isChecked():
-             selected_list.append('tcx3')
+             selected_list+= 'tcx3 '
           if hasattr(self, 'dsd21') and self.dsd21.isChecked():
-             selected_list.append('dsd21')
+             selected_list+= 'dsd21 '
           if hasattr(self, 'dsd22') and self.dsd22.isChecked():
-             selected_list.append('dsd22')
+             selected_list+= 'dsd22 '
           if hasattr(self, 'dsd23') and self.dsd23.isChecked():
-             selected_list.append('dsd23')
+             selected_list+= 'dsd23 '
           if hasattr(self, 'lmnb1') and self.lmnb1.isChecked():
-             selected_list.append('lmnb1')
+             selected_list+= 'lmnb1 '
           if hasattr(self, 'lmnb2') and self.lmnb2.isChecked():
-             selected_list.append('lmnb2')
+             selected_list+= 'lmnb2 '
           if hasattr(self, 'lmb3') and self.lmb3.isChecked():
-             selected_list.append('lmnb3')
+             selected_list+= 'lmnb3 '
           if hasattr(self, 'nsc') and self.nsc.isChecked():
-             selected_list.append('nsc')
+             selected_list+= 'nsc '
           if hasattr(self, 'ewc') and self.ewc.isChecked():
-             selected_list.append('ewc')
+             selected_list+= 'ewc '
           else:
              pass
        
@@ -695,18 +677,39 @@ class sign_in(QWidget):
         # go to officers page
        self.display_background()
        self.display_officer_details()
+       self.army_type = 'officer'
        return
     
     def mem_ber(self):
         # go to soldiers page
        self.display_background()
        self.display_soldier_details()
+       self.army_type = 'soldier'
        return
     
     def close_win(self):
         self.dict_details = {}
         self.destroy()
         return 
+     
+    def add_image(self):
+       
+       self.file_out = QFileDialog()
+       self.file_out.setAcceptMode(QFileDialog.AcceptOpen)
+       #self.file_out.setLabelText('add image')
+       self.file_out.setDefaultSuffix('.png')
+       self.file_out.setViewMode(QFileDialog.Detail)
+       #self.file_out.open()
+       
+       fileName = self.file_out.getOpenFileName()
+       filePath = str(fileName[0])
+
+       self.get_image = QImage(filePath)
+       new_path = r'C:\Users\ACER\Desktop\database management system\images\\'
+       print(self.army_type)
+       self.get_image.save(new_path + self.rank_title_edit.text()+ '_' + self.army_type + '.png')
+       
+       return
     
     
 

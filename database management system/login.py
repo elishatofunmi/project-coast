@@ -4,11 +4,14 @@ from PyQt5.QtGui import *
 
 from PyQt5.QtWidgets import *
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget
 
 #from database_display import Database
 from display_window import display_window
 from database import Database
+
+
+
 
 class login(QWidget):
     def __init__(self):
@@ -23,6 +26,8 @@ class login(QWidget):
         #self.mai = main()
         #self.mai.stacked.setCurrentWidget(self)
         self.trigger_login()
+        self.army_type = ''
+        
 
     def trigger_login(self):
         self.display_background()
@@ -94,38 +99,6 @@ class login(QWidget):
         self.show()
         #return
     
-  
-    
-    def log_in(self):
-       display = Database()
-       details = ()
-       if self.confirm_details() == True:
-           # find person
-           name = self.lineedit_name.text()
-           try:
-              details = display.fetch_record(int(name), base_type= 'officer')
-           except TypeError:
-              try:
-                 details= display.fetch_record(int(name), base_type = 'soldier')
-              except TypeError:
-                 details = 'not found'
-           finally:
-              if details == 'not found':
-                 self.display_label.setText('user not found re enter a valid user')
-              else:
-                 self.display_label.setText('user has been found')
-       else:
-          self.display_label.setText('enter a valid input')
-          
-       display_data = display_window()
-       get_image_directory = r'C:\Users\ACER\Desktop\database management system\images\\' + self.lineedit_name.text() + '.png'
-       display_data.attr_image = get_image_directory
-       display.attr_list = list(details)
-       display.show()
-           
-         
-
-    
     def confirm_details(self):
         name = self.lineedit_name.text()
         
@@ -151,7 +124,68 @@ class login(QWidget):
     
     def close_win(self):
         return sys.exit()
+     
+      
+    
+    def log_in(self):
+       display = Database()
+       details = ()
+       if self.confirm_details() == True:
+           # find person
+           name = self.lineedit_name.text()
+           try:
+              details = display.fetch_record(name, base_type= 'officer')
+              if details != 'not found':
+                 self.army_type = 'officer'
+                 print(self.army_type)
+              else:
+                 pass
+           except TypeError:
+              try:
+                 details= display.fetch_record(name, base_type = 'soldier')
+                 print('second try')
+                 if details != 'not found':
+                    self.army_type = 'soldier'
+                    print(self.army_type)
+                 else:
+                    pass
+              except TypeError:
+                 details = 'not found'
+           finally:
+              if details == 'not found':
+                 self.display_label.setText('user not found re enter a valid user')
+              else:
+                 self.display_label.setText('user has been found')
+                 print(details)
+                 get_image_directory = r'C:\Users\ACER\Desktop\database management system\images\\' + self.lineedit_name.text()+ '_' + self.army_type + '.png'
+                 self.display_data = display_window(ar_list = details, ar_image = get_image_directory)
+                 self.display_data.show()
+                 
+                 
+                 
+                 
+       else:
+          self.display_label.setText('enter a valid input')
+                     
+       return
+    
+    def my_display(self, first):
+       
+       return 
 
+    
+    
+     
+  
+
+
+
+
+
+
+
+
+    
 
 
 
