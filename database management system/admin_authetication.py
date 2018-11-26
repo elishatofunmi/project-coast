@@ -1,4 +1,5 @@
 import sys
+import PyQt5
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
@@ -13,6 +14,7 @@ class Authenticate_admin(QWidget):
         QWidget.__init__(self)
         self.title = 'Admin login'
         self.button_status = False
+        self.trigger_button = False
         self.setMaximumSize(700,500)
         self.dict_details = {'username': None, 'password': None, 'confirm_password': None}
         self.display_background()
@@ -94,6 +96,7 @@ class Authenticate_admin(QWidget):
 
         # display entry box for rank or title
         self.rank_title_edit = QLineEdit('', self)
+        self.rank_title_edit.setEchoMode(PyQt5.QtWidgets.QLineEdit.Password)
         self.rank_title_edit.move(180,250)
         self.rank_title_edit.resize(400,30)
        # layout.addWidget(self.rank_title_edit)
@@ -111,6 +114,7 @@ class Authenticate_admin(QWidget):
 
               #dispaly entrybox for confirming password
               self.password_conf = QLineEdit('',self)
+              self.password_conf.setEchoMode(PyQt5.QtWidgets.QLineEdit.Password)
               self.password_conf.move(180,350)
               self.password_conf.resize(400,30)
               #layout.addWidget(self.password_conf)
@@ -176,35 +180,28 @@ class Authenticate_admin(QWidget):
         self.show()
         return
      
+       
+     
     def log_details(self):
+       self.trigger_button = True
        value = None
        try:
-          if self.get_admin_details() == False:
+          if self.get_admin_details() == True:
              self.save_details()
-             self.display_entity()
-             self.button_status = False
           else:
              if self.compare_details() == True:
-                self.display_entity()
-                self.button_status = True
        except IndexError:
           if self.get_my_admin_details() == False:
              self.save_details()
-             self.display_entity()
-             self.button_status = False
           else:
              if self.compare_details() == True:
-                self.display_entity()
-                self.button_status = True
       
        
        return value
        
        
        
-    def display_entity(self):
-       return
-          
+   
     def read_admin_details(self):
         flie_open = open('admin_details.txt', 'r')
         read_data = flie_open.readlines()[0]

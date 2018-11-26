@@ -158,7 +158,7 @@ class login(QWidget):
                  self.display_label.setText('user has been found')
                  print(details)
                  get_image_directory = r'C:\Users\ACER\Desktop\database management system\images\\' + self.lineedit_name.text()+ '_' + self.army_type + '.png'
-                 self.display_data = display_window(ar_list = details, ar_image = get_image_directory)
+                 self.display_data = display_window(ar_list = details, ar_image = get_image_directory, name)
                  self.display_data.show()
                  
                  
@@ -172,15 +172,6 @@ class login(QWidget):
     def my_display(self, first):
        
        return 
-
-    
-    
-     
-  
-
-
-
-
 
 
 

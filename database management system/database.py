@@ -114,16 +114,19 @@ class Database():
       if base_type == 'soldier':
          conn= sqlite3.connect('database2.db')
          cursor = conn.cursor()
+         print('created cursor')
          
-         conn.execute('UPDATE SOLDIER set MARKS = 250 where ID = %s'%(army_no))
+         conn.execute('UPDATE SOLDIER set MARKS = 250 where ID = ?'(army_no,))
          conn.commit()
+         print('done')
          conn.close()
       elif base_type == 'officer':
          conn= sqlite3.connect('database2.db')
          cursor = conn.cursor()
-         
-         conn.execute('UPDATE OFFICER set MARKS = 250 where ID = %s'%(army_no))
+         print('created cursor')
+         conn.execute('UPDATE OFFICER set MARKS = 250 where ID = ?'(army_no,))
          conn.commit()
+         print('done')
          conn.close()
          
      
@@ -138,7 +141,7 @@ class Database():
          conn= sqlite3.connect('database2.db')
          cursor = conn.cursor()
          
-         conn.execute('DELETE from SOLDIER where id = %s' %army_no)
+         conn.execute('DELETE from SOLDIER where id = ?' (army_no,))
          conn.commit()
          conn.close()
          
@@ -146,12 +149,12 @@ class Database():
          conn= sqlite3.connect('database2.db')
          cursor = conn.cursor()
          
-         conn.execute('DELETE from OFFICER where id = %s' %army_no)
+         conn.execute('DELETE from OFFICER where id = ?' (army_no))
          conn.commit()
          conn.close()
      
       
      
       return
-if __name__ == '__main__':
-   data = Database()
+#if __name__ == '__main__':
+#   data = Database()
