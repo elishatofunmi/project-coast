@@ -15,9 +15,8 @@ class welcome(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('NIGERIAN ARMY SCHOOL OF SIGNALS STUDENT RECORD DATABASE')
-        self.status = False
-        self.setGeometry(0, 0, 680, 600)
-        self.setMaximumSize(700,600)
+        self.setGeometry(300, 200, 700, 500)
+        self.setMaximumSize(700,500)
         self.trigger_welcome()
         
     def trigger_welcome(self):
@@ -25,15 +24,14 @@ class welcome(QWidget):
         self.display()
         return
         
-        #self.mai = main()
-        #self.mai.stacked.setCurrentWidget(self)
+        
     
 
 
     def display_background(self):
 
         self.width = 700
-        self.height = 600
+        self.height = 500
         self.label = QLabel(self)
         self.label.resize(self.width, self.height)
         pixmap = QPixmap("final_png.PNG")
@@ -85,6 +83,7 @@ class welcome(QWidget):
         # move to the login window
         self.status = 'login'
         self.log = login()
+        self.hide()
         self.log.show()
         return
         
@@ -98,6 +97,7 @@ class welcome(QWidget):
         # move to administrative sign in
         self.status = 'sign'
         self.sign = sign_in()
+        self.hide()
         self.sign.show()
         
         return
@@ -107,15 +107,15 @@ class welcome(QWidget):
    
     
     
-if __name__ == '__main__':
-    
-    App = QApplication(sys.argv)
-    App.setStyle('Fusion')
-    
-    mai = welcome()
-    mai.show()
-    p = mai.palette()
-    p.setColor(mai.backgroundRole(), Qt.gray)
-    mai.setPalette(p)
-    
-    sys.exit(App.exec())
+#if __name__ == '__main__':
+#    
+#    App = QApplication(sys.argv)
+#    App.setStyle('Fusion')
+#    
+#    mai = welcome()
+#    mai.show()
+#    p = mai.palette()
+#    p.setColor(mai.backgroundRole(), Qt.gray)
+#    mai.setPalette(p)
+#    
+#    sys.exit(App.exec())

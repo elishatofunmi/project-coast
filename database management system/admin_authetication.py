@@ -6,6 +6,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
+from welcome import welcome
+
 
 
 
@@ -183,21 +185,35 @@ class Authenticate_admin(QWidget):
        
      
     def log_details(self):
-       self.trigger_button = True
-       value = None
        try:
           if self.get_admin_details() == True:
-             self.save_details()
-          else:
              if self.compare_details() == True:
+                self.welcome_page = welcome()
+                self.hide()
+                self.welcome_page.show()
+             else:
+                pass
+          else:
+             self.save_details()
+             self.welcome_page = welcome()
+             self.hide()
+             self.welcome_page.show()
        except IndexError:
-          if self.get_my_admin_details() == False:
-             self.save_details()
-          else:
+          if self.get_my_admin_details() == True:
              if self.compare_details() == True:
-      
+                self.welcome_page = welcome()
+                self.hide()
+                self.welcome_page.show()
+             else:
+                pass
+          else:
+             self.save_details()
+             self.welcome_page = welcome()
+             self.hide()
+             self.welcome_page.show()
+                
        
-       return value
+       return 
        
        
        
@@ -237,7 +253,6 @@ class Authenticate_admin(QWidget):
 
         if self.confirm_details() == True:
             self.display_label.setText('your details have been saved successfully')
-            self.status = True
             
             file_open = open('admin_details.txt', 'w')
             list_both = [self.lineedit_name.text(),',', self.rank_title_edit.text(),
@@ -269,7 +284,7 @@ class Authenticate_admin(QWidget):
     
     
     def cancel_details(self):
-        return sys.exit()
+        return self.close()
     
     
 #if __name__ == '__main__':

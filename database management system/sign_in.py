@@ -67,7 +67,7 @@ class sign_in(QWidget):
     def display_background(self):
        self.setWindowTitle(self.title)
        self.width = 700
-       self.height = 300
+       self.height = 500
        self.top = 300
        self.left = 200
 
@@ -706,21 +706,20 @@ class sign_in(QWidget):
 
        self.get_image = QImage(filePath)
        new_path = r'C:\Users\ACER\Desktop\database management system\images\\'
-       print(self.army_type)
        self.get_image.save(new_path + self.rank_title_edit.text()+ '_' + self.army_type + '.png')
        
        return
     
     
 
-if __name__ == '__main__':
-   app = QApplication(sys.argv)
-   app.setStyle('Fusion')
-   window = sign_in()
-   window.show()
-   p = window.palette()
-   p.setColor(window.backgroundRole(), Qt.gray)
-   window.setPalette(p)
-   sys.exit(app.exec())
-   
+#if __name__ == '__main__':
+#   app = QApplication(sys.argv)
+#   app.setStyle('Fusion')
+#   window = sign_in()
+#   window.show()
+#   p = window.palette()
+#   p.setColor(window.backgroundRole(), Qt.gray)
+#   window.setPalette(p)
+#   sys.exit(app.exec())
+#   
     

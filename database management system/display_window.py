@@ -6,16 +6,17 @@ from PyQt5.QtWidgets import *
 import numpy as np
 
 from PyQt5.QtWidgets import QWidget, QPushButton, QGridLayout, QLabel, QVBoxLayout, QLineEdit, QStackedLayout
+from database import Database
 
 
 
 class display_window(QWidget):
-   def __init__(self, ar_list, ar_image,name):
+   def __init__(self, name,ar_list, ar_image):
       
       super().__init__()
+      self.army_number = name
       self.attr_list = ar_list
       self.attr_image = ar_image
-      self.army_number = name
       self.setWindowTitle('student information')
       
       self.display_background()
@@ -23,16 +24,19 @@ class display_window(QWidget):
       self.show()
             
    def display_background(self):
-      self.width = 300
-      self.height = 600
-      self.setMaximumSize(300,600)
+      self.width = 400
+      self.height = 500
       self.label = QLabel(self)
       pixmap = QPixmap("all_background.PNG")
-      self.label.setGeometry(0,0,self.width,self.height)
+      self.label.setGeometry(0,0,self.width+100,self.height+100)
+      self.label.resize(700,500)
       self.label.setPixmap(pixmap)
       self.label.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
       self.label.setScaledContents(True)
-      self.label.show()   
+      self.label.show() 
+      self.setGeometry(300,200,self.width, self.height)
+      self.setBaseSize(self.width, self.height)
+      self.setMaximumSize(self.width, self.height)
        
             
    def display_image(self):
@@ -42,10 +46,10 @@ class display_window(QWidget):
       pixmap = QPixmap(self.attr_image)
       self.pixmat = pixmap.scaled(100, 100)
       background_label.setPixmap(self.pixmat)
-      background_label.setGeometry(300,200,100,100)
+      background_label.setGeometry(300,200,150,200)
       background_label.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
       background_label.setScaledContents(True)
-      layout.addWidget(background_label,2,2,5,3)
+      layout.addWidget(background_label,2,6,4,2)
       
       name_label = QLabel('Name:',self)
       layout.addWidget(name_label,8,1,1,1)
@@ -102,7 +106,8 @@ class display_window(QWidget):
          
    
    def click_to_edit(self):
-      self.admin = Auth_admin(self.attr_list,self.attr_image)
+      self.admin = Auth_admin(self.army_number,self.attr_list,self.attr_image)
+      self.hide()
       self.admin.show()
    
  
@@ -115,11 +120,12 @@ class display_window(QWidget):
    
    
 class Auth_admin(QWidget):
-    def __init__(self, ar_list, ar_image):
+    def __init__(self,name, ar_list, ar_image):
         QWidget.__init__(self)
         self.title = 'Admin login'
         self.setMaximumSize(700,500)
         self.dict_details = {'username': None, 'password': None}
+        self.army_no = name
         self.attr_list = ar_list
         self.attr_image = ar_image
         self.display_background()
@@ -142,7 +148,7 @@ class Auth_admin(QWidget):
        self.label.show()
 
        #self.setWindowIcon(QIcon('icon.png'))
-       self.setGeometry(self.top, self.left,self.width, self.height)
+       self.setGeometry(300,200,self.width, self.height)
         #return
         
     def get_admin_details(self):
@@ -238,13 +244,15 @@ class Auth_admin(QWidget):
     def log_details(self):
        if self.compare_details() == True:
           if 'officer' in self.attr_image:
-             self.offi= edit_officer(self.attr_list, self.attr_image, self.army_number)
+             self.offi= edit_officer(self.army_no,self.attr_list, self.attr_image)
+             self.hide()
              self.offi.show()
              
-          elif 'soldier' in self.attr_image:
-             self.sold = edit_sold(self.attr_list, self.attr_image, self.army_number)
-             self.sold.show()
              
+          elif 'soldier' in self.attr_image:
+             self.sold = edit_soldier(self.army_no,self.attr_list, self.attr_image)
+             self.hide()
+             self.sold.show()
           else:
              pass
  
@@ -280,7 +288,7 @@ class Auth_admin(QWidget):
         return solu
     
     def cancel_details(self):
-        return sys.exit(self)
+        return self.destroy()
          
          
      
@@ -288,26 +296,28 @@ class Auth_admin(QWidget):
       
          
 class edit_officer(QWidget):
-   def __init__(self,my_list, my_image, name):
+   def __init__(self,name,my_list, my_image):
       super().__init__()
+      self.army_number = name
       self.attr = my_list
       self.image = my_image
-      self.army_number = name
       self.background()
       self.display_officer_page()
       
       
    def background(self):
-      self.width = 300
-      self.height = 600
-      self.setMaximumSize(300,600)
+      self.width = 700
+      self.height = 500
+      self.setMaximumSize(700,500)
       self.label = QLabel(self)
       pixmap = QPixmap("all_background.PNG")
       self.label.setGeometry(0,0,self.width,self.height)
+      self.label.resize(700,500)
       self.label.setPixmap(pixmap)
       self.label.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
       self.label.setScaledContents(True)
       self.label.show() 
+      self.setGeometry(300,200,self.width, self.height)
       return
       
    def display_officer_page(self):
@@ -568,9 +578,9 @@ class edit_officer(QWidget):
           pass
        
             
-       return selected_lists
+       return selected_list
    def add_image(self):
-      import os
+       import os
        
        self.file_out = QFileDialog()
        self.file_out.setAcceptMode(QFileDialog.AcceptOpen)
@@ -578,15 +588,21 @@ class edit_officer(QWidget):
        self.file_out.setDefaultSuffix('.png')
        self.file_out.setViewMode(QFileDialog.Detail)
        #self.file_out.open()
-       
        fileName = self.file_out.getOpenFileName()
        filePath = str(fileName[0])
        source_file = self.image
        self.get_image = QImage(filePath)
-       new_path = r'C:\Users\ACER\Desktop\database management system\images\\'+ self.rank_title_edit.text()+ '_' + self.army_type + '.png'
-   
-       destination = new_path
-       os.replace(source_file, new_path)
+       new_path = r'C:\Users\ACER\Desktop\database management system\images\\'+ self.army_number+ '_' + 'officer' + '.png'
+      
+       try:
+          destination = new_path
+          os.replace(source_file, new_path)
+       except FileNotFoundError:
+          self.get_image.save(new_path)
+          
+       finally:
+          pass
+          
        
        return
     
@@ -624,7 +640,7 @@ class edit_officer(QWidget):
         print(unique_list)
         self.data_d = Database()
         self.data_d.data = unique_list
-        self.data_d.update_record(self.army_number,base_type = 'officer')
+        self.data_d.update_record(self.army_number,unique_list,base_type = 'officer')
         print('written to database')
         return
    
@@ -641,25 +657,27 @@ class edit_officer(QWidget):
    
    
 class edit_soldier(QWidget):
-   def __init__(self, my_list, my_image, name):
+   def __init__(self,name,my_list, my_image):
       super().__init__()
+      self.army_number =name
       self.attr = my_list
       self.image = my_image
-      self.army_number =name
       self.background()
       self.display_soldier_page()
       
    def background(self):
-      self.width = 300
-      self.height = 600
-      self.setMaximumSize(300,600)
+      self.width = 700
+      self.height = 500
+      self.setMaximumSize(700,500)
       self.label = QLabel(self)
       pixmap = QPixmap("all_background.PNG")
       self.label.setGeometry(0,0,self.width,self.height)
+      self.label.resize(700,500)
       self.label.setPixmap(pixmap)
       self.label.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
       self.label.setScaledContents(True)
       self.label.show() 
+      self.setGeometry(300,200,self.width, self.height)
       return
       
       
@@ -680,19 +698,19 @@ class edit_soldier(QWidget):
         layout.addWidget(self.edit_name,1,4,1,5)
         
 
-        # display Rank/title
-        self.rank_title = QLabel('Army Number:', self)
-        self.rank_title.move(30,70)
-        self.rank_title.resize(80,20)
-        layout.addWidget(self.rank_title,2,2,1,1)
-
-
-        # display entry box for rank or title
-        self.rank_title_edit = QLineEdit('', self)
-        self.rank_title_edit.move(100,70)
-        self.rank_title_edit.resize(400,30)
-        layout.addWidget(self.rank_title_edit,2,4,1,5)
-        self.rank_title_edit.setPlaceholderText("Enter Army number")
+#        # display Rank/title
+#        self.rank_title = QLabel('Army Number:', self)
+#        self.rank_title.move(30,70)
+#        self.rank_title.resize(80,20)
+#        layout.addWidget(self.rank_title,2,2,1,1)
+#
+#
+#        # display entry box for rank or title
+#        self.rank_title_edit = QLineEdit('', self)
+#        self.rank_title_edit.move(100,70)
+#        self.rank_title_edit.resize(400,30)
+#        layout.addWidget(self.rank_title_edit,2,4,1,5)
+#        self.rank_title_edit.setPlaceholderText("Enter Army number")
 
 
          # display RANK
@@ -894,7 +912,7 @@ class edit_soldier(QWidget):
         self.click_to_cancel.move(370,400)
         self.click_to_cancel.setToolTip("close window")
         self.click_to_cancel.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
-        self.click_to_cancel.clicked.connect(self.close_win)
+        self.click_to_cancel.clicked.connect(self.close_details)
         
         self.display_label = QLabel('',self)
         layout.addWidget(self.display_label,16,2,2,8)
@@ -913,15 +931,22 @@ class edit_soldier(QWidget):
        self.file_out.setDefaultSuffix('.png')
        self.file_out.setViewMode(QFileDialog.Detail)
        #self.file_out.open()
-       
        fileName = self.file_out.getOpenFileName()
        filePath = str(fileName[0])
        source_file = self.image
        self.get_image = QImage(filePath)
-       new_path = r'C:\Users\ACER\Desktop\database management system\images\\'+ self.rank_title_edit.text()+ '_' + self.army_type + '.png'
-   
-       destination = new_path
-       os.replace(source_file, new_path)
+       new_path = r'C:\Users\ACER\Desktop\database management system\images\\'+ self.army_number+ '_' + 'soldier' + '.png'
+      
+       try:
+          destination = new_path
+          os.replace(source_file, new_path)
+       except FileNotFoundError:
+          self.get_image.save(new_path)
+          
+       finally:
+          pass
+          
+       
        return 
        
        
@@ -1052,7 +1077,7 @@ class edit_soldier(QWidget):
         print(unique_list)
         self.data_d = Database()
         self.data_d.data = unique_list
-        self.data_d.update_record(self.army_number,base_type = 'soldier')
+        self.data_d.update_record(self.army_number,unique_list,base_type = 'soldier')
         print('written to database')
         return
    

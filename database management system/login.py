@@ -123,7 +123,8 @@ class login(QWidget):
     
     
     def close_win(self):
-        return sys.exit()
+       self.hide()
+       return sys.exit()
      
       
     
@@ -158,7 +159,8 @@ class login(QWidget):
                  self.display_label.setText('user has been found')
                  print(details)
                  get_image_directory = r'C:\Users\ACER\Desktop\database management system\images\\' + self.lineedit_name.text()+ '_' + self.army_type + '.png'
-                 self.display_data = display_window(ar_list = details, ar_image = get_image_directory, name)
+                 self.display_data = display_window(name,ar_list = details, ar_image = get_image_directory)
+                 self.hide()
                  self.display_data.show()
                  
                  
@@ -168,21 +170,15 @@ class login(QWidget):
           self.display_label.setText('enter a valid input')
                      
        return
-    
-    def my_display(self, first):
-       
-       return 
-
-
 
 
     
 
 
 
-if __name__ == '__main__':
-    App = QApplication(sys.argv)
-    App.setStyle('Fusion')
-    window = login()
-    window.show()
-    sys.exit(App.exec())
+#if __name__ == '__main__':
+#    App = QApplication(sys.argv)
+#    App.setStyle('Fusion')
+#    window = login()
+#    window.show()
+#    sys.exit(App.exec())
