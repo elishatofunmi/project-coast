@@ -648,8 +648,7 @@ class edit_officer(QWidget):
    
    def close_details(self):
       self.hide()
-      self.win = window()
-      self.win.show()
+      
       return
    
    
@@ -1086,8 +1085,7 @@ class edit_soldier(QWidget):
    
    def close_details(self):
       self.hide()
-      self.win = window()
-      self.win.show()
+      
       return
    
    
