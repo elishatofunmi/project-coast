@@ -669,7 +669,7 @@ class sign_in(QWidget):
         #back to initial window
      #  self.mai = main()
      #self.stacked.setCurrentWidget(self.wel)
-       #self.wel.show()
+       #self.wel.show(())
        sys.exit()
        return
     
@@ -690,6 +690,8 @@ class sign_in(QWidget):
     def close_win(self):
         self.dict_details = {}
         self.destroy()
+        self.display_win = window()
+        self.display_win.show()
         return 
      
     def add_image(self):

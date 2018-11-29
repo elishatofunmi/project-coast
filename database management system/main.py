@@ -50,4 +50,4 @@ if __name__ == '__main__':
 #    window.setPalette(p)
  
         
-    sys.exit(App.exec_())
+    sys.exit(App.exec())
