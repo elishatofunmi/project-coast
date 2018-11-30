@@ -4,7 +4,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 import numpy as np
-from subprocess import PIPE,Popen
+
 from PyQt5.QtWidgets import QWidget, QPushButton, QGridLayout, QLabel, QVBoxLayout, QLineEdit, QStackedLayout
 from database import Database
 
@@ -335,7 +335,7 @@ class edit_officer(QWidget):
        self.edit_name.move(100,30)
        self.edit_name.resize(400, 30)
        #self.edit_name.setPlaceholderText("Enter officer name")
-       self.edit_name.seText(str(self.attr[0]))
+       self.edit_name.setText(str(self.attr[1]))
        layout.addWidget(self.edit_name,1,4,1,5)
        
 
@@ -363,7 +363,7 @@ class edit_officer(QWidget):
        self.rank_box.resize(400,30)
        layout.addWidget(self.rank_box,3,4,1,5)
        #self.rank_box.setPlaceholderText("Enter your rank")
-       self.rank_box.setText(str(self.attr[1]))
+       self.rank_box.setText(str(self.attr[2]))
        
        
 
@@ -380,7 +380,7 @@ class edit_officer(QWidget):
        self.enter_unit.resize(400,30)
        layout.addWidget(self.enter_unit,4,4,1,5)
        #self.enter_unit.setPlaceholderText("Enter Unit")
-       self.enter_unit.setText(str(self.attr[2]))
+       self.enter_unit.setText(str(self.attr[3]))
 
 
 
@@ -599,7 +599,8 @@ class edit_officer(QWidget):
       
        try:
           destination = new_path
-          os.replace(source_file, new_path)
+          os.remove(self.image)
+          self.get_image.save(new_path)
        except FileNotFoundError:
           self.get_image.save(new_path)
           
@@ -698,7 +699,8 @@ class edit_soldier(QWidget):
         self.edit_name = QLineEdit('', self)
         self.edit_name.move(100,30)
         self.edit_name.resize(400,30)
-        self.edit_name.setPlaceholderText("Enter officer name")
+        #self.edit_name.setPlaceholderText("Enter officer name")
+        self.edit_name.setText(str(self.attr[1]))
         layout.addWidget(self.edit_name,1,4,1,5)
         
 
@@ -726,7 +728,8 @@ class edit_soldier(QWidget):
         self.rank_box.move(100,70)
         self.rank_box.resize(400,30)
         layout.addWidget(self.rank_box,3,4,1,5)
-        self.rank_box.setPlaceholderText("Enter your rank")
+        #self.rank_box.setPlaceholderText("Enter your rank")
+        self.rank_box.setText(str(self.attr[2]))
 
 
         # display unit
@@ -740,7 +743,8 @@ class edit_soldier(QWidget):
         self.enter_unit.move(100,110)
         self.enter_unit.resize(400,30)
         layout.addWidget(self.enter_unit,4,4,1,5)
-        self.enter_unit.setPlaceholderText("Enter Unit")
+        #self.enter_unit.setPlaceholderText("Enter Unit")
+        self.enter_unit.setText(str(self.attr[3]))
         
         
         #display soldiers details
@@ -943,7 +947,8 @@ class edit_soldier(QWidget):
       
        try:
           destination = new_path
-          os.remove(filePath)
+          os.remove(self.image)
+          self.get_image.save(new_path)
        except FileNotFoundError:
           self.get_image.save(new_path)
           
