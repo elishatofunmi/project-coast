@@ -1,0 +1,14 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+class Clustering():
+    def GetData(self):
+        'Gets the data imputed by the user' # function GetData documentation
+    def random_assigment(self):
+        'Randomly assigns value to inputs' # function random_assigment documemtation
+    def Cluster_mapping():
+        'Maps inputs to clusterng' # function Cluster_mapping documentaion
+    def Cluster_fit_plot():
+        "fits and plot our clustering model" # Cluster_fit_plot documentation
+    def Cluster_stat():
+        "display the overall statistics of the model" # documentation
