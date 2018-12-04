@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget
 
 from database import Database
 from PyQt5.QtCore import QCoreApplication
-from second_welcome import welcome
+
 
 
 
@@ -23,28 +23,24 @@ class selector(QWidget):
       self.left = 300
       self.width = 200
       self.height = 100
-      self.setGeometry(self.left,self.top,200,100)
+      self.setGeometry(self.top,self.left,200,100)
       self.setMaximumSize(200,100)
       self.background()
       self.display_buttons()
       
       
    def background(self):
-      #self.label = QLabel(self)
-      #pixmap = QPixmap(r"C:\Users\ACER\Desktop\database_manager\all_background.PNG")
-      #self.label.setGeometry(400,300,200,100)
-      #self.label.setPixmap(pixmap)
-      #self.label.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
-      #self.label.setScaledContents(True)
-      #self.label.show()
-      self.setWindowTitle(self.title)
-      self.setAutoFillBackground(True)
-      p = self.palette()
-      p.setColor(self.backgroundRole(), Qt.white)
-      self.setPalette(p)
+      self.label = QLabel(self)
+      pixmap = QPixmap(r"C:\Users\ACER\Desktop\database_manager\all_background.PNG")
+      self.label.setGeometry(400,300,200,100)
+      self.label.setPixmap(pixmap)
+      self.label.setStyleSheet('background-color:#4e4e4e;color:#f7f7f7;')
+      self.label.setScaledContents(True)
+      self.label.show()
+
        #self.setWindowIcon(QIcon('icon.png'))
-      self.setGeometry(self.left, self.top,self.width, self.height)
-      self.show()
+      self.setGeometry(self.top, self.left,self.width, self.height)
+      
       
    def display_buttons(self):
       layout = QGridLayout()
@@ -368,8 +364,6 @@ class sign_in(QWidget):
         self.data_d = Database()
         self.data_d.data = unique_list
         self.data_d.insert_records(base_type = 'soldier')
-        self.hide()
-        self.wel = welcome()
         return
      
     def save_officer(self):
@@ -399,13 +393,10 @@ class sign_in(QWidget):
             
         
         # save data to database
-        # save image
         unique_list = tuple(saved_list)
         self.data_d = Database()
         self.data_d.data = unique_list
         self.data_d.insert_records(base_type = 'officer')
-        self.hide()
-        self.wel = welcome()
         return
     
     
@@ -423,7 +414,7 @@ class sign_in(QWidget):
         self.edit_name = QLineEdit('', self)
         self.edit_name.move(100,30)
         self.edit_name.resize(400,30)
-        self.edit_name.setPlaceholderText("Enter soldier name")
+        self.edit_name.setPlaceholderText("Enter officer name")
         layout.addWidget(self.edit_name,1,4,1,5)
         
 
@@ -770,7 +761,8 @@ class sign_in(QWidget):
     
     def close_win(self):
         self.dict_details = {}
-        return self.close()
+        self.destroy()
+        return 
      
     def format_this(self, value):
        name = ''
@@ -808,11 +800,11 @@ class sign_in(QWidget):
 #if __name__ == '__main__':
 #   app = QApplication(sys.argv)
 #   app.setStyle('Fusion')
-#   window = selector()
+#   window = sign_in()
 #   window.show()
-##   p = window.palette()
-##   p.setColor(window.backgroundRole(), Qt.gray)
-##   window.setPalette(p)
+#   p = window.palette()
+#   p.setColor(window.backgroundRole(), Qt.gray)
+#   window.setPalette(p)
 #   sys.exit(app.exec())
-#   
+   
     
